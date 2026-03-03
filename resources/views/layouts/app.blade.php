@@ -48,7 +48,7 @@
 
     <!-- Main CSS -->
     <link rel="stylesheet" href="{{asset('assets/css/style.css')}}">
-
+@stack('styles')
 </head>
 
 <body>
@@ -1435,13 +1435,7 @@
 
     <div class="page-wrapper">
         <div class="content">
-
-            <div class="d-flex align-items-center justify-content-between flex-wrap gap-3 mb-2">
-                <div class="mb-3">
-                    <h1 class="mb-1">Welcome, {{ucwords(auth()->user()->name)}}</h1>
-                    <p class="fw-medium">You have <span class="text-primary fw-bold">200+</span> Orders, Today</p>
-                </div>
-            </div>
+            @yield('content')
         </div>
         @include('layouts.partials.footer')
     </div>
@@ -1546,6 +1540,6 @@
 <!-- Custom JS -->
 <script src="{{asset('assets/js/theme-colorpicker.js')}}"></script>
 <script src="{{asset('assets/js/script.js')}}" ></script>
-
+@stack('scripts')
 </body>
 </html>

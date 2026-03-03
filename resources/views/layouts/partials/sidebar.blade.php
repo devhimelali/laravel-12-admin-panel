@@ -88,7 +88,7 @@
                     <h6 class="submenu-hdr">User Management</h6>
                     <ul>
                         <li>
-                            <a href="users.html">
+                            <a href="{{route('users.index')}}">
                                 <i class="ti ti-shield-up fs-16 me-2"></i>
                                 <span>Users</span>
                             </a>
