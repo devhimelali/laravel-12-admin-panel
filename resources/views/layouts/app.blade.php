@@ -6,13 +6,14 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Dreams POS is a powerful Bootstrap based Inventory Management Admin Template designed for businesses, offering seamless invoicing, project tracking, and estimates.">
-    <meta name="keywords" content="inventory management, admin dashboard, bootstrap template, invoicing, estimates, business management, responsive admin, POS system">
+    <meta name="description"
+          content="Dreams POS is a powerful Bootstrap based Inventory Management Admin Template designed for businesses, offering seamless invoicing, project tracking, and estimates.">
+    <meta name="keywords"
+          content="inventory management, admin dashboard, bootstrap template, invoicing, estimates, business management, responsive admin, POS system">
     <meta name="author" content="Dreams Technologies">
     <meta name="robots" content="index, follow">
     <title>@yield('title') - {{config('app.name')}}</title>
-    <!-- jQuery -->
-    <script src="{{asset('assets/js/jquery-3.7.1.min.js')}}"></script>
+
     <script src="{{asset('assets/js/theme-script.js')}}"></script>
 
     <!-- Favicon -->
@@ -31,7 +32,7 @@
     <link rel="stylesheet" href="{{asset('assets/css/animate.css')}}">
 
     <!-- Select2 CSS -->
-    {{--    <link rel="stylesheet" href="assets/plugins/select2/css/select2.min.css">--}}
+    <link rel="stylesheet" href="{{asset('assets/plugins/select2/css/select2.min.css')}}">
 
     <!-- Daterangepikcer CSS -->
     {{--    <link rel="stylesheet" href="assets/plugins/daterangepicker/daterangepicker.css">--}}
@@ -44,11 +45,13 @@
     <link rel="stylesheet" href="{{asset('assets/plugins/fontawesome/css/all.min.css')}}">
 
     <!-- Color Picker Css -->
-    {{--    <link rel="stylesheet" href="assets/plugins/%40simonwep/pickr/themes/nano.min.css">--}}
+    <link rel="stylesheet" href="{{asset('assets/plugins/%40simonwep/pickr/themes/nano.min.css')}}">
 
     <!-- Main CSS -->
     <link rel="stylesheet" href="{{asset('assets/css/style.css')}}">
-@stack('styles')
+    <!-- jQuery -->
+    <script src="{{asset('assets/js/jquery-3.7.1.min.js')}}"></script>
+    @stack('styles')
 </head>
 
 <body>
@@ -1509,7 +1512,9 @@
     </div>
 </div>
 <!-- /Add Stock -->
-
+<!-- Modal -->
+@yield('modals')
+<!-- /Modal -->
 <!-- Feather Icon JS -->
 <script src="{{asset('assets/js/feather.min.js')}}"></script>
 
@@ -1532,14 +1537,14 @@
 {{--<script src="assets/plugins/daterangepicker/daterangepicker.js" type="749ffe33f85148c350856405-text/javascript"></script>--}}
 
 <!-- Select2 JS -->
-{{--<script src="assets/plugins/select2/js/select2.min.js" type="749ffe33f85148c350856405-text/javascript"></script>--}}
+<script src="{{asset('assets/plugins/select2/js/select2.min.js')}}"></script>
 
 <!-- Color Picker JS -->
-{{--<script src="assets/plugins/%40simonwep/pickr/pickr.es5.min.js" type="749ffe33f85148c350856405-text/javascript"></script>--}}
+<script src="{{asset('assets/plugins/%40simonwep/pickr/pickr.es5.min.js')}}"></script>
 
 <!-- Custom JS -->
 <script src="{{asset('assets/js/theme-colorpicker.js')}}"></script>
-<script src="{{asset('assets/js/script.js')}}" ></script>
+<script src="{{asset('assets/js/script.js')}}"></script>
 @stack('scripts')
 </body>
 </html>
