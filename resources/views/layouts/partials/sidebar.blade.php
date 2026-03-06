@@ -87,14 +87,14 @@
                 <li class="submenu-open">
                     <h6 class="submenu-hdr">User Management</h6>
                     <ul>
-                        <li>
+                        <li class="@if (Route::current()->getName() == 'users.index') active @endif">
                             <a href="{{route('users.index')}}">
                                 <i class="ti ti-shield-up fs-16 me-2"></i>
                                 <span>Users</span>
                             </a>
                         </li>
-                        <li>
-                            <a href="roles-permissions.html">
+                        <li class="@if (Route::current()->getName() == 'roles.index') active @endif">
+                            <a href="{{route('roles.index')}}">
                                 <i class="ti ti-jump-rope fs-16 me-2"></i>
                                 <span>Roles & Permissions</span>
                             </a>

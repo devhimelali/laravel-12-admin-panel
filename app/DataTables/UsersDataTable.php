@@ -24,12 +24,26 @@ class UsersDataTable extends DataTable
     {
         return (new EloquentDataTable($query))
             ->editColumn('role', function ($row) {
-                if ($row->roles->isEmpty()) {
+
+                $roles = $row->roles ?? collect();
+
+                if ($roles->isEmpty()) {
                     return '<span class="badge bg-secondary">No Role</span>';
                 }
 
-                return $row->roles->map(function ($role) {
-                    return '<span class="badge bg-primary me-1">' . e($role->name) . '</span>';
+                $colors = [
+                    'admin'   => 'bg-primary',
+                    'manager' => 'bg-warning',
+                    'editor'  => 'bg-info',
+                    'user'    => 'bg-secondary',
+                ];
+
+                return $roles->map(function ($role) use ($colors) {
+
+                    $class = $colors[strtolower($role->name)] ?? 'bg-dark';
+
+                    return '<span class="badge ' . $class . ' me-1">' . e($role->name) . '</span>';
+
                 })->implode(' ');
             })
             ->editColumn('email_verified_at', function ($row) {
@@ -50,6 +64,7 @@ class UsersDataTable extends DataTable
                 return $actionBtn;
             })
             ->rawColumns(['role', 'action'])
+            ->addIndexColumn()
             ->setRowId('id');
     }
 
@@ -90,7 +105,8 @@ class UsersDataTable extends DataTable
     public function getColumns(): array
     {
         return [
-            Column::make('id'),
+            Column::make('DT_RowIndex')
+            ->title('S.N'),
             Column::make('name'),
             Column::make('email'),
             Column::make('role'),

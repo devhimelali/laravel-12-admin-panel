@@ -14,8 +14,6 @@
     <meta name="robots" content="index, follow">
     <title>@yield('title') - {{config('app.name')}}</title>
 
-    <script src="{{asset('assets/js/theme-script.js')}}"></script>
-
     <!-- Favicon -->
     <link rel="shortcut icon" type="image/x-icon" href="{{asset('assets/img/favicon.png')}}">
 
@@ -51,6 +49,7 @@
     <link rel="stylesheet" href="{{asset('assets/css/style.css')}}">
     <!-- jQuery -->
     <script src="{{asset('assets/js/jquery-3.7.1.min.js')}}"></script>
+    <link rel="stylesheet" href="{{asset('assets/plugins/toastr/toatr.css')}}">
     @stack('styles')
 </head>
 
@@ -1513,8 +1512,10 @@
 </div>
 <!-- /Add Stock -->
 <!-- Modal -->
-@yield('modals')
+@stack('modals')
 <!-- /Modal -->
+<!-- Toaster JS -->
+<script src="{{asset('assets/plugins/toastr/toastr.min.js')}}"></script>
 <!-- Feather Icon JS -->
 <script src="{{asset('assets/js/feather.min.js')}}"></script>
 
@@ -1545,6 +1546,145 @@
 <!-- Custom JS -->
 <script src="{{asset('assets/js/theme-colorpicker.js')}}"></script>
 <script src="{{asset('assets/js/script.js')}}"></script>
+<script>
+    window.assetBase = "{{ asset('') }}";
+
+    function notify(type, msg, position = 'toast-top-right') {
+        if (['success', 'info', 'warning', 'error'].includes(type)) {
+            toastr.options = {
+                "closeButton": true,
+                "debug": false,
+                "newestOnTop": true,
+                "progressBar": true,
+                "positionClass": "toast-top-right",
+                "preventDuplicates": false,
+                "onclick": null,
+                "showDuration": "300",
+                "hideDuration": "1000",
+                "timeOut": "5000",
+                "extendedTimeOut": "1000",
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut"
+            }
+
+            toastr[type](msg);
+        } else {
+            console.error(`Invalid toastr type: ${type}`);
+        }
+    }
+
+    function ajaxBeforeSend(formSelector, buttonSelector) {
+        $(formSelector).find('.is-invalid').removeClass('is-invalid');
+        $(buttonSelector).prop('disabled', true);
+        $(buttonSelector).html(
+            '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Processing...'
+        );
+    }
+
+    function handleAjaxErrors(xhr, status, error) {
+        switch (xhr.status) {
+            case 400:
+                notify('error',
+                    'The request could not be processed due to invalid input. Please review your data and try again.'
+                );
+                break;
+            case 401:
+                notify('error', 'Your session has expired or you are not logged in. Please log in to continue.');
+                break;
+            case 403:
+                notify('error',
+                    'You do not have permission to perform this action. Please contact your administrator if you believe this is an error.'
+                );
+                break;
+            case 404:
+                notify('error',);
+                message = 'The requested resource could not be found. It may have been moved or deleted.';
+                break;
+            case 422:
+                let errors = xhr.responseJSON.errors;
+
+                $('.invalid-feedback').remove();
+                $('.is-invalid').removeClass('is-invalid');
+
+                $.each(errors, function (field, messages) {
+                    // Try to find the input by exact name first
+                    let input = $('[name="' + field + '"]');
+
+                    // If not found, try with brackets (for array fields like categories[])
+                    if (input.length === 0) {
+                        input = $('[name="' + field + '[]"]');
+                    }
+
+                    // If still not found and field contains a dot (for nested validation)
+                    if (input.length === 0 && field.includes('.')) {
+                        // Handle Laravel's dot notation for nested arrays (e.g., categories.0)
+                        let parts = field.split('.');
+                        let baseField = parts[0];
+                        input = $('[name="' + baseField + '[]"]');
+                    }
+
+                    if (input.length) {
+                        input.addClass('is-invalid');
+
+                        // For multiple checkboxes or multi-select
+                        if (input.is(':checkbox') || input.is(':radio') || (input.is('select') && input.attr('multiple'))) {
+                            // Add invalid class to all checkboxes with same name
+                            $('[name="' + input.attr('name') + '"]').addClass('is-invalid');
+
+                            // Show error message once near the group
+                            let container = input.closest('.form-group, .mb-3, .col-md-6, .checkbox-group, .select2-container');
+                            if (!container.find('.invalid-feedback').length) {
+                                container.append('<div class="invalid-feedback d-block">' + messages[0] + '</div>');
+                            }
+                        }
+                        // For single select
+                        else if (input.is('select')) {
+                            input.closest('.form-group, .mb-3, .col-md-6').append(
+                                '<div class="invalid-feedback d-block">' + messages[0] + '</div>'
+                            );
+                        }
+                        // For regular inputs
+                        else {
+                            input.after('<div class="invalid-feedback">' + messages[0] + '</div>');
+                        }
+                    } else {
+                        // Fallback: If we still can't find the input, try more generic selectors
+                        let container = $('[id*="' + field + '"], [class*="' + field + '"]').closest('.form-group, .mb-3, .col-md-6');
+                        if (container.length) {
+                            container.find('input, select, textarea').addClass('is-invalid');
+                            container.append('<div class="invalid-feedback d-block">' + messages[0] + '</div>');
+                        }
+                    }
+                });
+
+                break;
+            case 429:
+                notify('error', 'Too many requests. Please try again later.');
+                break;
+            case 500:
+                notify('error',
+                    'An unexpected server error occurred. Please try again later or contact support if the issue persists.'
+                );
+                break;
+            case 0:
+                notify('error',
+                    'Network connection lost or server is unreachable. Please check your internet connection and try again.'
+                );
+                break;
+            default:
+                notify('error', 'An unknown error occurred. Please try again or contact support.');
+                break;
+        }
+    }
+
+    function ajaxComplete(buttonSelector, defaultText = 'Save') {
+        $(buttonSelector).prop('disabled', false);
+        $(buttonSelector).html(defaultText);
+    }
+</script>
+<script src="{{asset('assets/js/theme-script.js')}}"></script>
 @stack('scripts')
 </body>
 </html>
