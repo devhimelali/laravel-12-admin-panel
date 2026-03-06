@@ -5,6 +5,9 @@ document.querySelector("html").setAttribute('data-color', localStorage.getItem('
 document.querySelector("html").setAttribute('data-topbar', localStorage.getItem('topbar') || 'white');
 document.querySelector("html").setAttribute('data-layout', localStorage.getItem('layout') || 'default');
 document.querySelector("html").setAttribute('data-width', localStorage.getItem('width') || 'fluid');
+function asset(path) {
+    return window.assetBase + path;
+}
 
 let themesettings = `
 <div class="sidebar-contact ">
@@ -34,8 +37,8 @@ let themesettings = `
                                     <input type="radio" name="LayoutTheme" id="defaultLayout" value="default" checked>
                                     <label for="defaultLayout">
                                         <span class="d-block mb-2 layout-img">
-                                            <img src="assets/img/theme/default.svg" alt="img">
-                                        </span>                                     
+                                            <img src="${asset('assets/img/theme/default.svg')}" alt="img">
+                                        </span>
                                         <span class="layout-type">Default</span>
                                     </label>
                                 </div>
@@ -45,8 +48,8 @@ let themesettings = `
                                     <input type="radio" name="LayoutTheme" id="miniLayout" value="mini" >
                                     <label for="miniLayout">
                                         <span class="d-block mb-2 layout-img">
-                                            <img src="assets/img/theme/mini.svg" alt="img">
-                                        </span>                                    
+                                            <img src="${asset('assets/img/theme/mini.svg')}" alt="img">
+                                        </span>
                                         <span class="layout-type">Mini</span>
                                     </label>
                                 </div>
@@ -56,8 +59,8 @@ let themesettings = `
                                     <input type="radio" name="LayoutTheme" id="twocolumnLayout" value="twocolumn" >
                                     <label for="twocolumnLayout">
                                         <span class="d-block mb-2 layout-img">
-                                            <img src="assets/img/theme/two-column.svg" alt="img">
-                                        </span>                                    
+                                            <img src="${asset('assets/img/theme/two-column.svg')}" alt="img">
+                                        </span>
                                         <span class="layout-type">Two Column</span>
                                     </label>
                                 </div>
@@ -67,8 +70,8 @@ let themesettings = `
                                     <input type="radio" name="LayoutTheme" id="horizontalLayout" value="horizontal" >
                                     <label for="horizontalLayout">
                                         <span class="d-block mb-2 layout-img">
-                                            <img src="assets/img/theme/horizontal.svg" alt="img">
-                                        </span>                                    
+                                            <img src="${asset('assets/img/theme/horizontal.svg')}" alt="img">
+                                        </span>
                                         <span class="layout-type">Horizontal</span>
                                     </label>
                                 </div>
@@ -78,8 +81,8 @@ let themesettings = `
                                     <input type="radio" name="LayoutTheme" id="detachedLayout" value="detached" >
                                     <label for="detachedLayout">
                                         <span class="d-block mb-2 layout-img">
-                                            <img src="assets/img/theme/detached.svg" alt="img">
-                                        </span>                                    
+                                            <img src="${asset('assets/img/theme/detached.svg')}" alt="img">
+                                        </span>
                                         <span class="layout-type">Detached</span>
                                     </label>
                                 </div>
@@ -89,24 +92,16 @@ let themesettings = `
                                     <input type="radio" name="LayoutTheme" id="without-headerLayout" value="without-header" >
                                     <label for="without-headerLayout">
                                         <span class="d-block mb-2 layout-img">
-                                            <img src="assets/img/theme/without-header.svg" alt="img">
-                                        </span>                                    
+                                            <img src="${asset('assets/img/theme/without-header.svg')}" alt="img">
+                                        </span>
                                         <span class="layout-type">Without Header</span>
                                     </label>
                                 </div>
                             </div>
-                            <div class="col-4">
-                                <a href="layout-rtl.html" class="theme-layout mb-3">
-                                    <span class="d-block mb-2 layout-img">
-                                        <img src="assets/img/theme/rtl.svg" alt="img">
-                                    </span>                                    
-                                    <span class="layout-type d-block">RTL</span>
-                                </a>
-                            </div>
                         </div>
                     </div>
                 </div>
-            </div> 
+            </div>
             <div class="accordion-item border px-3 layout-select">
                 <h2 class="accordion-header">
                     <button class="accordion-button text-dark fs-16 bg-transparent px-0 py-3" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarsetting" aria-expanded="true">
@@ -130,7 +125,7 @@ let themesettings = `
                                     Boxed Layout
                                 </label>
                             </div>
-                        </div>  
+                        </div>
                     </div>
                 </div>
             </div>
@@ -163,15 +158,15 @@ let themesettings = `
                             <div class="theme-colorselect theme-colorselect-rounded mb-3 me-3">
                                 <input type="radio" name="topbar" id="bluehazeTopbar" value="topbarcolorfour">
                                 <label for="bluehazeTopbar" class=" bg-sidebar-color-4"></label>
-                            </div>              
+                            </div>
                             <div class="theme-colorselect theme-colorselect-rounded mb-3 me-3">
                                 <input type="radio" name="topbar" id="topbar-color-5" value="topbarcolorfive">
                                 <label for="topbar-color-5" class="bg-sidebar-color-5"></label>
-                            </div>              
+                            </div>
                             <div class="theme-colorselect theme-colorselect-rounded mb-3 me-3">
                                 <input type="radio" name="topbar" id="topbar-color-6" value="topbarcolorsix">
                                 <label for="topbar-color-6" class="bg-sidebar-color-6"></label>
-                            </div>              
+                            </div>
                             <div class="theme-colorselect theme-colorselect-rounded mb-3 mt-0">
                                 <div class="theme-topbar"></div>
                                 <div class="pickr-topbar"></div>
@@ -198,23 +193,23 @@ let themesettings = `
                             <div class="theme-colorselect theme-colorselect-rounded mb-3 me-3">
                                 <input type="radio" name="topbar" id="topbar-color-11" value="topbarcoloreleven">
                                 <label for="topbar-color-11" class=" bg-sidebar-color-11"></label>
-                            </div> 
+                            </div>
                             <div class="theme-colorselect theme-colorselect-rounded mb-3 me-3">
                                 <input type="radio" name="topbar" id="topbar-color-12" value="topbarcolortwelve">
                                 <label for="topbar-color-12" class=" bg-sidebar-color-12"></label>
-                            </div> 
+                            </div>
                             <div class="theme-colorselect theme-colorselect-rounded mb-3 me-3">
                                 <input type="radio" name="topbar" id="topbar-color-13" value="topbarcolorthirteen">
                                 <label for="topbar-color-13" class=" bg-sidebar-color-13"></label>
-                            </div> 
+                            </div>
                             <div class="theme-colorselect theme-colorselect-rounded mb-3 me-3">
                                 <input type="radio" name="topbar" id="topbar-color-14" value="topbarcolorfourteen">
                                 <label for="topbar-color-14" class=" bg-sidebar-color-14"></label>
-                            </div> 
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div> 
+            </div>
             <div class="accordion-item border px-3 layout-select">
                 <h2 class="accordion-header">
                     <button class="accordion-button text-dark fs-16 px-0 py-3 bg-transparent" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarcolor" aria-expanded="true">
@@ -254,12 +249,12 @@ let themesettings = `
                                 <input type="radio" name="sidebar" id="bgcolor5Sidebar" value="sidebarcolorfive">
                                 <label for="bgcolor5Sidebar" class="d-block bg-sidebar-color-5 mb-2">
                                 </label>
-                            </div>                            
+                            </div>
                             <div class="theme-colorselect me-3">
                                 <input type="radio" name="sidebar" id="bgcolor6Sidebar" value="sidebarcolorsix">
                                 <label for="bgcolor6Sidebar" class="d-block bg-sidebar-color-6 mb-2">
                                 </label>
-                            </div>                          
+                            </div>
                             <div class="theme-colorselect mt-0 mb-2">
                                 <div class="theme-container-background"></div>
                                 <div class="pickr-container-background"></div>
@@ -291,26 +286,26 @@ let themesettings = `
                                 <input type="radio" name="sidebar" id="bgcolor11Sidebar" value="sidebarcoloreleven">
                                 <label for="bgcolor11Sidebar" class="d-block bg-sidebar-color-11 mb-2">
                                 </label>
-                            </div>  
+                            </div>
                             <div class="theme-colorselect me-3">
                                 <input type="radio" name="sidebar" id="bgcolor12Sidebar" value="sidebarcolortwelve">
                                 <label for="bgcolor12Sidebar" class="d-block bg-sidebar-color-12 mb-2">
                                 </label>
-                            </div>  
+                            </div>
                             <div class="theme-colorselect me-3">
                                 <input type="radio" name="sidebar" id="bgcolor13Sidebar" value="sidebarcolorthirteen">
                                 <label for="bgcolor13Sidebar" class="d-block bg-sidebar-color-13 mb-2">
                                 </label>
-                            </div>  
+                            </div>
                             <div class="theme-colorselect">
                                 <input type="radio" name="sidebar" id="bgcolor14Sidebar" value="sidebarcolorfourteen">
                                 <label for="bgcolor14Sidebar" class="d-block bg-sidebar-color-14 mb-2">
                                 </label>
-                            </div>  
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>   
+            </div>
             <div class="accordion-item border px-3">
                 <h2 class="accordion-header">
                     <button class="accordion-button text-dark fs-16 px-0 py-3 bg-transparent" type="button" data-bs-toggle="collapse" data-bs-target="#modesetting" aria-expanded="true">
@@ -322,26 +317,26 @@ let themesettings = `
                        <div class="d-flex align-items-center">
                             <div class="theme-mode flex-fill text-center w-100 me-3">
                                 <input type="radio" name="theme" id="lightTheme" value="light" checked>
-                                <label for="lightTheme" class="rounded fw-medium w-100">                            
+                                <label for="lightTheme" class="rounded fw-medium w-100">
                                     <span class="d-inline-flex rounded me-2"><i class="ti ti-sun-filled"></i></span>Light
                                 </label>
                             </div>
                             <div class="theme-mode flex-fill text-center w-100 me-3">
                                 <input type="radio" name="theme" id="darkTheme" value="dark" >
-                                <label for="darkTheme" class="rounded fw-medium w-100">                         
+                                <label for="darkTheme" class="rounded fw-medium w-100">
                                     <span class="d-inline-flex rounded me-2"><i class="ti ti-moon-filled"></i></span>Dark
                                 </label>
                             </div>
                             <div class="theme-mode flex-fill w-100 text-center">
                                 <input type="radio" name="theme" id="systemTheme" value="system">
-                                <label for="systemTheme" class="rounded fw-medium w-100">                         
-                                    <span class="d-inline-flex rounded me-2"><i class="ti ti-device-laptop"></i></span>System 
+                                <label for="systemTheme" class="rounded fw-medium w-100">
+                                    <span class="d-inline-flex rounded me-2"><i class="ti ti-device-laptop"></i></span>System
                                 </label>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>    	    
+            </div>
             <div class="accordion-item border px-3 layout-select">
                 <h2 class="accordion-header">
                     <button class="accordion-button text-dark fs-16 px-0 py-3 bg-transparent" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarbgsetting" aria-expanded="true">
@@ -390,7 +385,7 @@ let themesettings = `
                         </div>
                     </div>
                 </div>
-            </div>    
+            </div>
             <div class="accordion-item border px-3">
                 <h2 class="accordion-header">
                     <button class="accordion-button text-dark fs-16 px-0 py-3 bg-transparent" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarcolor" aria-expanded="true">
@@ -423,31 +418,28 @@ let themesettings = `
                             <div class="theme-colorsset me-2 mb-2">
                                 <input type="radio" name="color" id="chromeyellowColor" value="chromeyellow">
                                 <label for="chromeyellowColor" class="theme-color-5"></label>
-                            </div> 
+                            </div>
                             <div class="theme-colorsset me-2 mb-2">
                                 <input type="radio" name="color" id="orangeColor" value="orange">
                                 <label for="orangeColor" class="theme-color-6"></label>
-                            </div> 
-                           <div class="theme-colorsset mb-2">                                
+                            </div>
+                           <div class="theme-colorsset mb-2">
                                 <div class="pickr-container-primary"  onchange="updateChartColor(this.value)"></div>
                                 <div class="theme-container-primary"></div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div> 
-        </div> 
+            </div>
+        </div>
     </div>
         <div class="p-3 pt-0">
             <div class="row gx-3">
-                <div class="col-6">
+                <div class="col-12">
                     <a href="#" id="resetbutton" class="btn btn-light close-theme w-100"><i class="ti ti-restore me-1"></i>Reset</a>
                 </div>
-                <div class="col-6">
-                    <a href="#" class="btn btn-primary w-100" data-bs-dismiss="offcanvas"><i class="ti ti-shopping-cart-plus me-1"></i>Buy Product</a>
-                </div>
             </div>
-        </div>    
+        </div>
     </div>
             `
 
@@ -458,21 +450,21 @@ let themesettings = `
 		const darkModeToggle = document.getElementById('dark-mode-toggle');
 		const lightModeToggle = document.getElementById('light-mode-toggle');
 		const darkMode = localStorage.getItem('darkMode');
-	
-		function enableDarkMode() {  
+
+		function enableDarkMode() {
             document.documentElement.setAttribute('data-theme', 'dark');
 			darkModeToggle.classList.remove('activate');
 			lightModeToggle.classList.add('activate');
 			localStorage.setItem('darkMode', 'enabled');
 		}
-	
+
 		function disableDarkMode() {
             document.documentElement.setAttribute('data-theme', 'light');
 			lightModeToggle.classList.remove('activate');
 			darkModeToggle.classList.add('activate');
 			localStorage.removeItem('darkMode');
 		}
-	
+
 		 // Check if darkModeToggle and lightModeToggle exist before adding event listeners
          if (darkModeToggle && lightModeToggle) {
             // Check the current mode on page load
@@ -481,7 +473,7 @@ let themesettings = `
             } else {
                 disableDarkMode();
             }
-    
+
             // Add event listeners
             darkModeToggle.addEventListener('click', enableDarkMode);
             lightModeToggle.addEventListener('click', disableDarkMode);
@@ -499,14 +491,14 @@ let themesettings = `
         const resetButton = document.getElementById('resetbutton');
         const sidebarBgContainer = document.getElementById('sidebarbgContainer');
         const sidebarElement = document.querySelector('.sidebar'); // Adjust this selector to match your sidebar element
-    
+
         function setThemeAndSidebarTheme(theme, sidebarTheme, color, layout, topbar, width) {
             // Check if the sidebar element exists
             if (!sidebarElement) {
                 console.error('Sidebar element not found');
                 return;
             }
-    
+
             // Setting data attributes and classes
             document.documentElement.setAttribute('data-theme', theme);
             document.documentElement.setAttribute('data-sidebar', sidebarTheme);
@@ -514,7 +506,7 @@ let themesettings = `
             document.documentElement.setAttribute('data-layout', layout);
             document.documentElement.setAttribute('data-topbar', topbar);
             document.documentElement.setAttribute('data-width', width);
-    
+
             //track mini-layout set or not
             layout_mini = 0;
             if (layout === 'mini') {
@@ -548,7 +540,7 @@ let themesettings = `
             ((width === 'box') && (layout === 'horizontal-single')) || ((width === 'box') && (layout === 'without-header'))) {
                     document.body.classList.remove("mini-sidebar");
             }
-            
+
             // Saving to localStorage
             localStorage.setItem('theme', theme);
             localStorage.setItem('sidebarTheme', sidebarTheme);
@@ -557,7 +549,7 @@ let themesettings = `
             localStorage.setItem('topbar', topbar);
             localStorage.setItem('width', width);
             //localStorage.removeItem('primaryRGB');
-    
+
             // Show/hide sidebar background options based on layout selection
             if (layout === 'box' && sidebarBgContainer) {
                 sidebarBgContainer.classList.add('show');
@@ -565,10 +557,10 @@ let themesettings = `
                 sidebarBgContainer.classList.remove('show');
             }
         }
-    
+
         function handleSidebarBgChange() {
             const sidebarBg = document.querySelector('input[name="sidebarbg"]:checked') ? document.querySelector('input[name="sidebarbg"]:checked').value : null;
-    
+
             if (sidebarBg) {
                 document.body.setAttribute('data-sidebarbg', sidebarBg);
                 localStorage.setItem('sidebarBg', sidebarBg);
@@ -580,7 +572,7 @@ let themesettings = `
 
         function handleTopbarBgChange() {
             const topbarbg = document.querySelector('input[name="topbarbg"]:checked') ? document.querySelector('input[name="topbarbg"]:checked').value : null;
-    
+
             if (topbarbg) {
                 document.body.setAttribute('data-topbarbg', topbarbg);
                 localStorage.setItem('topbarbg', topbarbg);
@@ -589,17 +581,17 @@ let themesettings = `
                 localStorage.removeItem('topbarbg');
             }
         }
-    
+
         function handleInputChange() {
             const theme = document.querySelector('input[name="theme"]:checked').value;
             const layout = document.querySelector('input[name="LayoutTheme"]:checked').value;
             const width = document.querySelector('input[name="width"]:checked').value;
 
-            
+
             color = localStorage.getItem('primaryRGB');
             sidebarTheme = localStorage.getItem('sidebarRGB');
             topbar = localStorage.getItem('topbarRGB');
-            
+
             if(document.querySelector('input[name="color"]:checked') != null)
             {
                 color = document.querySelector('input[name="color"]:checked').value;
@@ -620,37 +612,37 @@ let themesettings = `
             }else{
                 topbar = 'all'
             }
-    
+
             setThemeAndSidebarTheme(theme, sidebarTheme, color, layout, topbar, width);
         }
-    
+
         function resetThemeAndSidebarThemeAndColorAndBg() {
             setThemeAndSidebarTheme('light', 'light', 'primary', 'default', 'white', 'white', 'default', 'fluid', 'enable');
             document.body.removeAttribute('data-sidebarbg');
             document.body.removeAttribute('data-topbarbg');
-    
+
             document.getElementById('lightTheme').checked = true;
             document.getElementById('lightSidebar').checked = true;
             document.getElementById('primaryColor').checked = true;
             document.getElementById('defaultLayout').checked = true;
             document.getElementById('whiteTopbar').checked = true;
             document.getElementById('fluidWidth').checked = true;
-    
+
             const checkedSidebarBg = document.querySelector('input[name="sidebarbg"]:checked');
             if (checkedSidebarBg) {
                 checkedSidebarBg.checked = false;
             }
-    
+
             localStorage.removeItem('sidebarBg');
 
             const checkedTopbarBg = document.querySelector('input[name="topbarbg"]:checked');
             if (checkedTopbarBg) {
                 checkedTopbarBg.checked = false;
             }
-    
+
             localStorage.removeItem('topbarbg');
         }
-    
+
         // Adding event listeners
         themeRadios.forEach(radio => radio.addEventListener('change', handleInputChange));
         sidebarRadios.forEach(radio => radio.addEventListener('change', handleInputChange));
@@ -661,7 +653,7 @@ let themesettings = `
         sidebarBgRadios.forEach(radio => radio.addEventListener('change', handleSidebarBgChange));
         topbarbgRadios.forEach(radio => radio.addEventListener('change', handleTopbarBgChange));
         resetButton.addEventListener('click', resetThemeAndSidebarThemeAndColorAndBg);
-    
+
         // Initial setup from localStorage
         const savedTheme = localStorage.getItem('theme') || 'light';
         savedSidebarTheme = localStorage.getItem('sidebarTheme');
@@ -673,7 +665,7 @@ let themesettings = `
         const savedTopbarBg = localStorage.getItem('topbarbg') || null;
 
         // setup theme color all
-        const savedColorPickr = localStorage.getItem('primaryRGB') 
+        const savedColorPickr = localStorage.getItem('primaryRGB')
         if((savedColor == null) && (savedColorPickr == null))
         {
             savedColor = 'primary';
@@ -685,7 +677,7 @@ let themesettings = `
         }
 
         // setup theme topbar all
-        const savedTopbarPickr = localStorage.getItem('topbarRGB') 
+        const savedTopbarPickr = localStorage.getItem('topbarRGB')
         if((savedTopbar == null) && (savedTopbarPickr == null))
         {
             savedTopbar = 'white';
@@ -697,7 +689,7 @@ let themesettings = `
         }
 
         // setup theme color all
-        const savedSidebarPickr = localStorage.getItem('sidebarRGB') 
+        const savedSidebarPickr = localStorage.getItem('sidebarRGB')
         if((savedSidebarTheme == null) && (savedSidebarPickr == null))
         {
             savedSidebarTheme = 'light';
@@ -708,9 +700,9 @@ let themesettings = `
             html.style.setProperty("--sidebar-rgb",  savedSidebarPickr);
         }
 
-    
+
         setThemeAndSidebarTheme(savedTheme, savedSidebarTheme, savedColor, savedLayout, savedTopbar, savedWidth);
-    
+
         if (savedSidebarBg) {
             document.body.setAttribute('data-sidebarbg', savedSidebarBg);
         } else {
@@ -722,7 +714,7 @@ let themesettings = `
         } else {
             document.body.removeAttribute('data-topbarbg');
         }
-    
+
         // Check and set radio buttons based on saved preferences
         if (document.getElementById(`${savedTheme}Theme`)) {
             document.getElementById(`${savedTheme}Theme`).checked = true;
@@ -748,11 +740,11 @@ let themesettings = `
         if (savedTopbarBg && document.getElementById(`${savedTopbarBg}`)) {
             document.getElementById(`${savedTopbarBg}`).checked = true;
         }
-    
+
         // Initially hide sidebar background options based on layout
         if (savedLayout !== 'box' && sidebarBgContainer) {
             sidebarBgContainer.classList.remove('show');
         }
 });
-    
+
 
