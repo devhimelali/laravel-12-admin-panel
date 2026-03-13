@@ -20,13 +20,18 @@ class RoleSeeder extends Seeder
                 'is_active' => true
             ],
             [
+                'name' => 'moderator',
+                'display_name' => 'Moderator',
+                'is_active' => true
+            ],
+            [
                 'name' => 'manager',
                 'display_name' => 'Manager',
                 'is_active' => true
             ]
         ];
 
-        foreach ($roles as $role){
+        foreach ($roles as $role) {
             Role::create($role);
         }
     }
