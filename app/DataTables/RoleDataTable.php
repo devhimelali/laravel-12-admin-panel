@@ -35,7 +35,7 @@ class RoleDataTable extends DataTable
             })
             ->addColumn('action', function ($row) {
                 $actionBtn = '<div class="action-icon d-inline-flex">';
-                $actionBtn .= '<a href="permissions.html" class="me-2 d-flex align-items-center p-2 border rounded"><i class="ti ti-shield"></i></a>';
+                $actionBtn .= '<a href="' . route('roles.permissions', $row) . '" class="me-2 d-flex align-items-center p-2 border rounded" data-bs-toggle="tooltip" data-bs-placement="top" title="Manage Permissions"><i class="ti ti-shield"></i></a>';
                 $actionBtn .= '<button type="button" class="me-2 d-flex align-items-center p-2 border rounded edit" data-id="' . $row->id . '"><i class="ti ti-edit"></i></button>';
                 $actionBtn .= '<button type="button" class="d-flex align-items-center p-2 border rounded delete" data-id="' . $row->id . '"><i class="ti ti-trash"></i></button>';
                 $actionBtn .= '</div>';

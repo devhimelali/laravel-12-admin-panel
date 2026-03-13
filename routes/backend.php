@@ -9,3 +9,5 @@ Route::get('/dashboard', function () {
 })->name('dashboard');
 Route::resource('users', UserController::class);
 Route::resource('roles', RoleController::class);
+Route::get('roles/{role}/permissions', [RoleController::class, 'permissions'])->name('roles.permissions');
+Route::post('roles/{role}/permissions', [RoleController::class, 'updatePermissions'])->name('roles.update-permissions');
