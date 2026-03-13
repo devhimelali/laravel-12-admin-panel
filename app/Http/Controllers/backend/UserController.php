@@ -12,7 +12,7 @@ class UserController extends Controller
 {
     public function index(UsersDataTable $dataTable)
     {
-        $roles = Role::all();
+        $roles = Role::where('is_active', 1)->get();
         return $dataTable->render('backend.users.index', compact('roles'));
     }
 

@@ -33,11 +33,11 @@ class RoleDataTable extends DataTable
             ->editColumn('created_at', function ($row) {
                 return $row->created_at->format('d M Y');
             })
-            ->addColumn('action', function ($row){
+            ->addColumn('action', function ($row) {
                 $actionBtn = '<div class="action-icon d-inline-flex">';
                 $actionBtn .= '<a href="permissions.html" class="me-2 d-flex align-items-center p-2 border rounded"><i class="ti ti-shield"></i></a>';
-                $actionBtn .= '<button type="button" class="me-2 d-flex align-items-center p-2 border rounded edit" data-id="'.$row->id.'"><i class="ti ti-edit"></i></button>';
-                $actionBtn .= '<button type="button" class="d-flex align-items-center p-2 border rounded delete" data-id="'.$row->id.'"><i class="ti ti-trash"></i></button>';
+                $actionBtn .= '<button type="button" class="me-2 d-flex align-items-center p-2 border rounded edit" data-id="' . $row->id . '"><i class="ti ti-edit"></i></button>';
+                $actionBtn .= '<button type="button" class="d-flex align-items-center p-2 border rounded delete" data-id="' . $row->id . '"><i class="ti ti-trash"></i></button>';
                 $actionBtn .= '</div>';
                 return $actionBtn;
             })
@@ -53,7 +53,13 @@ class RoleDataTable extends DataTable
      */
     public function query(Role $model): QueryBuilder
     {
-        return $model->newQuery()->with('permissions');
+        $query = $model->newQuery()->with('permissions');
+
+        if ($status = request('status')) {
+            $query->where('is_active', $status);
+        }
+
+        return $query;
     }
 
     /**
@@ -91,10 +97,10 @@ class RoleDataTable extends DataTable
             Column::make('description'),
             Column::make('is_active')
                 ->title('Status')
-            ->width(100),
+                ->width(100),
             Column::make('created_at')
-            ->title('Created Date')
-            ->width(100),
+                ->title('Created Date')
+                ->width(100),
             Column::computed('action')
                 ->exportable(false)
                 ->printable(false)

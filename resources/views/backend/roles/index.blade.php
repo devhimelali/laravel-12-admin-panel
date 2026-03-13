@@ -10,13 +10,20 @@
         </div>
         <ul class="table-top-head">
             <li>
+                <select class="form-control" name="status" id="filter-status" class="form-select">
+                    <option value="">All</option>
+                    <option value="1">Active</option>
+                    <option value="0">Inactive</option>
+                </select>
+            </li>
+            {{-- <li>
                 <a data-bs-toggle="tooltip" data-bs-placement="top" aria-label="Pdf" data-bs-original-title="Pdf"><img
                         src="{{ asset('assets/img/icons/pdf.svg') }}" alt="img"></a>
             </li>
             <li>
                 <a data-bs-toggle="tooltip" data-bs-placement="top" aria-label="Excel" data-bs-original-title="Excel"><img
                         src="{{ asset('assets/img/icons/excel.svg') }}" alt="img"></a>
-            </li>
+            </li> --}}
             <li>
                 <a href="javascript:void(0);" data-bs-toggle="tooltip" data-bs-placement="top" aria-label="Refresh"
                     data-bs-original-title="Refresh" id="refresh-table">
@@ -48,15 +55,17 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <div class="page-title">
-                        <h4>Create Role</h4>
+                        <h4 id="modal-title">Create Role</h4>
                     </div>
                     <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>
-                <form action="{{ route('roles.store') }}" method="POST" id="role-form">
+                <form action="{{ route('roles.store') }}" id="role-form" data-store-url="{{ route('roles.store') }}"
+                    data-update-url="{{ route('roles.update', ['role' => ':id']) }}">
                     @csrf
-                    <input type="hidden" name="_method" value="POST">
+                    <input type="hidden" name="_method" id="form-method" value="POST">
+                    <input type="hidden" name="role_id" id="role-id" value="">
                     <div class="modal-body">
                         <div class="mb-3">
                             <label class="form-label">Role Name</label>
@@ -122,40 +131,87 @@
                 table.ajax.reload(null, false);
             });
 
+            $('#filter-status').on('change', function() {
+                table.ajax.url('{{ route('roles.index') }}?status=' + $(this).val()).load();
+            });
+
             $('#add-role').on('click', function() {
+                $('#modal-title').text('Create Role');
+                $('#role-form').attr('action', $('#role-form').data('store-url'));
+                $('#form-method').val('POST');
+                $('#role-id').val('');
+                $('#role-form')[0].reset();
+                $('#status').prop('checked', true);
+                $('#submit-btn').text('Create Role');
                 $('#add-role-modal').modal('show');
-            })
+            });
+
+            $('#add-role-modal').on('hidden.bs.modal', function() {
+                $('#modal-title').text('Create Role');
+                $('#role-form').attr('action', $('#role-form').data('store-url'));
+                $('#form-method').val('POST');
+                $('#role-id').val('');
+                $('#role-form')[0].reset();
+                $('#status').prop('checked', true);
+                $('#submit-btn').text('Create Role');
+            });
 
             $('#submit-btn').on('click', function(e) {
                 e.preventDefault();
                 let form = $(this).closest('form')[0];
                 let formData = new FormData(form);
+                let isUpdate = $('#form-method').val() === 'PUT';
 
-                // convert checkbox value to 1 or 0
                 formData.set('is_active', $('#status').is(':checked') ? 1 : 0);
 
                 $.ajax({
                     url: $(form).attr('action'),
                     type: 'POST',
                     data: formData,
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                    },
                     processData: false,
                     contentType: false,
                     beforeSend: function() {
-                        ajaxBeforeSend('#role-form', '#submit-btn')
+                        ajaxBeforeSend('#role-form', '#submit-btn');
                     },
                     success: function(response) {
                         if (response.status === 'success') {
                             notify(response.status, response.message);
                             $('#add-role-modal').modal('hide');
                             table.ajax.reload(null, false);
+                        } else {
+                            notify(response.status || 'error', response.message);
                         }
                     },
                     error: handleAjaxErrors,
                     complete: function() {
-                        ajaxComplete('#submit-btn', 'Create Role')
+                        ajaxComplete('#submit-btn', isUpdate ? 'Update Role' : 'Create Role');
                     }
                 });
-            })
+            });
+
+            $(document).on('click', '.edit', function() {
+                let id = $(this).data('id');
+                $.get("{{ route('roles.edit', ['role' => ':id']) }}".replace(':id', id), function(
+                    response) {
+                    let data = response.data;
+                    $('#modal-title').text('Edit Role');
+                    $('#role-form').attr('action', $('#role-form').data('update-url').replace(':id',
+                        id));
+                    $('#form-method').val('PUT');
+                    $('#role-id').val(id);
+                    $('#name').val(data.name);
+                    $('#display_name').val(data.display_name);
+                    $('#description').val(data.description || '');
+                    $('#status').prop('checked', !!data.is_active);
+                    $('#submit-btn').text('Update Role');
+                    $('#add-role-modal').modal('show');
+                }).fail(function(xhr) {
+                    notify('error', xhr.responseJSON?.message || 'Something went wrong');
+                });
+            });
 
             $(document).on('click', '.delete', function() {
                 let id = $(this).data('id');
@@ -190,7 +246,7 @@
                     }
                 });
             });
-        })
+        });
     </script>
 @endpush
 @push('styles')

@@ -24,6 +24,27 @@ class RoleController extends Controller
         ]);
     }
 
+    public function edit($id)
+    {
+        $role = Role::findOrFail($id);
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Role fetched successfully.',
+            'data' => $role
+        ]);
+    }
+
+    public function update(RoleRequest $request, $id)
+    {
+        $role = Role::findOrFail($id);
+        $role->update($request->validated());
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Role updated successfully.'
+        ]);
+    }
+
     public function destroy($id)
     {
         Role::findOrFail($id)->delete();
