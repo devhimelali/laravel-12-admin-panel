@@ -74,7 +74,13 @@ class UsersDataTable extends DataTable
      */
     public function query(User $model): QueryBuilder
     {
-        return $model->newQuery()->with('roles');
+        $query = $model->newQuery()->with('roles');
+
+        if ($role = request('role')) {
+            $query->role($role);
+        }
+
+        return $query;
     }
 
     /**

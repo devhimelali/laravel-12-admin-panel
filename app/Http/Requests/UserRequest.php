@@ -22,7 +22,8 @@ class UserRequest extends FormRequest
      */
     public function rules(): array
     {
-        $id = $this->route('user') ? $this->route('user')->id : null;
+        $user = $this->route('user');
+        $id = $user ? (is_object($user) ? $user->id : $user) : null;
         $passwordRules = $id ? ['nullable', 'string', 'min:8'] : ['required', 'string', 'min:8'];
         $confirmPasswordRules = $id ? ['nullable', 'string', 'min:8', 'same:password'] : ['required', 'string', 'min:8', 'same:password'];
         return [

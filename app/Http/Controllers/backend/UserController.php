@@ -29,7 +29,7 @@ class UserController extends Controller
 
     public function edit($id)
     {
-        $user = User::findOrFail($id);
+        $user = User::with('roles')->findOrFail($id);
         return response()->json([
             'status' => 'success',
             'message' => 'User fetched successfully.',
@@ -39,8 +39,12 @@ class UserController extends Controller
     public function update(UserRequest $request, $id)
     {
         $user = User::findOrFail($id);
-        $user->update($request->validated());
-        $user->roles()->sync($request->role);
+        $data = collect($request->validated())->except(['password', 'confirm_password'])->toArray();
+        if ($request->filled('password')) {
+            $data['password'] = $request->password;
+        }
+        $user->update($data);
+        $user->syncRoles([$request->role]);
 
         return response()->json([
             'status' => 'success',
