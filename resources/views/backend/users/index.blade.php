@@ -114,6 +114,13 @@
                                             </select>
                                         </div>
                                     </div>
+                                    <div class="d-flex align-items-center justify-content-between">
+                                        <label class="form-label">Status</label>
+                                        <label class="switch">
+                                            <input type="checkbox" checked="" name="is_active" id="status">
+                                            <span class="slider round"></span>
+                                        </label>
+                                    </div>
                                 </div>
                             </div>
                             <div class="modal-footer">
@@ -193,6 +200,8 @@
                 let form = $(this).closest('form')[0];
                 let formData = new FormData(form);
                 let isUpdate = $('#form-method').val() === 'PUT';
+                let isActive = $('#status').is(':checked') ? 1 : 0;
+                formData.append('is_active', isActive);
 
                 $.ajax({
                     url: $(form).attr('action'),
@@ -241,6 +250,7 @@
                     $('#name').val(data.name);
                     $('#email').val(data.email);
                     $('#role').val(roleName).trigger('change');
+                    $('#status').prop('checked', !!data.is_active);
                     $('#password').val('').attr('placeholder', 'Leave blank to keep current');
                     $('#confirm_password').val('').attr('placeholder',
                         'Leave blank to keep current');

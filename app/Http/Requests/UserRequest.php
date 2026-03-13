@@ -32,6 +32,7 @@ class UserRequest extends FormRequest
             'password' => $passwordRules,
             'confirm_password' => $confirmPasswordRules,
             'role' => ['required', 'exists:roles,name'],
+            'is_active' => ['required', 'in:0,1']
         ];
     }
 
@@ -43,6 +44,7 @@ class UserRequest extends FormRequest
             'password' => 'password',
             'confirm_password' => 'confirm password',
             'role' => 'role',
+            'is_active' => 'status'
         ];
     }
 
@@ -59,6 +61,8 @@ class UserRequest extends FormRequest
             'confirm_password.same' => 'The confirm password and password must match.',
             'role.required' => 'The role field is required.',
             'role.exists' => 'The selected role does not exist.',
+            'is_active.required' => 'The status field is required.',
+            'is_active.in' => 'The status must be either Active or Inactive.',
         ];
     }
 }

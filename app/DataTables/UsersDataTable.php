@@ -34,8 +34,8 @@ class UsersDataTable extends DataTable
                 $colors = [
                     'admin'   => 'bg-primary',
                     'manager' => 'bg-warning',
-                    'editor'  => 'bg-info',
-                    'user'    => 'bg-secondary',
+                    'moderator'  => 'bg-info',
+                    'editor'    => 'bg-secondary',
                 ];
 
                 return $roles->map(function ($role) use ($colors) {
@@ -47,6 +47,11 @@ class UsersDataTable extends DataTable
             })
             ->editColumn('email_verified_at', function ($row) {
                 return Carbon::parse($row->email_verified_at)->format('d-m-Y h:i A');
+            })
+            ->editColumn('is_active', function ($row) {
+                $text = $row->is_active ? 'Active' : 'Inactive';
+                $bgColor = $row->is_active ? 'bg-success' : 'bg-danger';
+                return '<span class="badge table-badge ' . $bgColor . ' fw-medium fs-10">' . $text . '</span>';
             })
             ->editColumn('created_at', function ($row) {
                 return Carbon::parse($row->created_at)->format('d-m-Y');
@@ -62,7 +67,7 @@ class UsersDataTable extends DataTable
                 $actionBtn .= '</div>';
                 return $actionBtn;
             })
-            ->rawColumns(['role', 'action'])
+            ->rawColumns(['role', 'action', 'is_active'])
             ->addIndexColumn()
             ->setRowId('id');
     }
@@ -116,6 +121,9 @@ class UsersDataTable extends DataTable
             Column::make('email'),
             Column::make('role'),
             Column::make('email_verified_at'),
+            Column::make('is_active')
+                ->title('Status')
+                ->addClass('text-center'),
             Column::make('created_at'),
             Column::computed('action')
                 ->exportable(false)
