@@ -43,14 +43,13 @@ class UsersDataTable extends DataTable
                     $class = $colors[strtolower($role->name)] ?? 'bg-dark';
 
                     return '<span class="badge ' . $class . ' me-1">' . e($role->name) . '</span>';
-
                 })->implode(' ');
             })
             ->editColumn('email_verified_at', function ($row) {
                 return Carbon::parse($row->email_verified_at)->format('d-m-Y h:i A');
             })
             ->editColumn('created_at', function ($row) {
-                return Carbon::parse($row->created_at)->format('d-m-Y h:i A');
+                return Carbon::parse($row->created_at)->format('d-m-Y');
             })
             ->addColumn('action', function ($row) {
                 $actionBtn = '<div class="edit-delete-action">';
@@ -106,7 +105,7 @@ class UsersDataTable extends DataTable
     {
         return [
             Column::make('DT_RowIndex')
-            ->title('S.N'),
+                ->title('S.N'),
             Column::make('name'),
             Column::make('email'),
             Column::make('role'),
@@ -115,7 +114,7 @@ class UsersDataTable extends DataTable
             Column::computed('action')
                 ->exportable(false)
                 ->printable(false)
-                ->width(60)
+                ->width(100)
                 ->addClass('text-center action-table-data'),
         ];
     }

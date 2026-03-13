@@ -23,4 +23,14 @@ class RoleController extends Controller
             'message' => 'Role created successfully.'
         ]);
     }
+
+    public function destroy($id)
+    {
+        Role::findOrFail($id)->delete();
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Role deleted successfully.'
+        ]);
+    }
 }
