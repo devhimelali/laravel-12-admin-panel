@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b94efeefdbdfd26da64cdd2f340c0b7d",
+    "content-hash": "540c9961d4587cab3eec9b66f043d593",
     "packages": [
         {
             "name": "bacon/bacon-qr-code",
@@ -7836,6 +7836,60 @@
                 }
             ],
             "time": "2026-03-29T15:46:14+00:00"
+        },
+        {
+            "name": "callmeleon167/debugphp",
+            "version": "v1.4.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/CallMeLeon167/debugphp.git",
+                "reference": "5cf326c93b6f1c61b229816d4051ca6610eef712"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/CallMeLeon167/debugphp/zipball/5cf326c93b6f1c61b229816d4051ca6610eef712",
+                "reference": "5cf326c93b6f1c61b229816d4051ca6610eef712",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "php": "^8.1"
+            },
+            "require-dev": {
+                "phpstan/phpstan": "^2.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "DebugPHP\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Leon Schmidt",
+                    "homepage": "https://github.com/CallMeLeon167",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Real-time PHP debugging in the browser — zero config, zero dependencies, just send() and see.",
+            "homepage": "https://debugphp.dev",
+            "keywords": [
+                "debug",
+                "debugging",
+                "developer-tools",
+                "php",
+                "real-time",
+                "sse"
+            ],
+            "support": {
+                "issues": "https://github.com/CallMeLeon167/debugphp/issues",
+                "source": "https://github.com/CallMeLeon167/debugphp"
+            },
+            "time": "2026-04-23T10:10:12+00:00"
         },
         {
             "name": "doctrine/deprecations",
