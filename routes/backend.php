@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\backend\LoginHistoryController;
 use App\Http\Controllers\backend\UserController;
 use App\Http\Controllers\RoleController;
 use Illuminate\Support\Facades\Route;
@@ -11,3 +12,5 @@ Route::resource('users', UserController::class);
 Route::resource('roles', RoleController::class);
 Route::get('roles/{role}/permissions', [RoleController::class, 'permissions'])->name('roles.permissions');
 Route::post('roles/{role}/permissions', [RoleController::class, 'updatePermissions'])->name('roles.update-permissions');
+Route::get('login-histories', [LoginHistoryController::class, 'index'])->name('login-history.index');
+Route::get('login-histories/{loginHistory}/details', [LoginHistoryController::class, 'details'])->name('login-history.details');

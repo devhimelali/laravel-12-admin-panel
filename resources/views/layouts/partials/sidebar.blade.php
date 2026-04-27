@@ -2,13 +2,13 @@
     <!-- Logo -->
     <div class="sidebar-logo active">
         <a href="index.html" class="logo logo-normal">
-            <img src="{{asset('assets/img/logo.svg')}}" alt="Img">
+            <img src="{{ asset('assets/img/logo.svg') }}" alt="Img">
         </a>
         <a href="index.html" class="logo logo-white">
-            <img src="{{asset('assets/img/logo-white.svg')}}" alt="Img">
+            <img src="{{ asset('assets/img/logo-white.svg') }}" alt="Img">
         </a>
         <a href="index.html" class="logo-small">
-            <img src="{{asset('assets/img/logo-small.png')}}" alt="Img">
+            <img src="{{ asset('assets/img/logo-small.png') }}" alt="Img">
         </a>
         <a id="toggle_btn" href="javascript:void(0);">
             <i data-feather="chevrons-left" class="feather-16"></i>
@@ -77,7 +77,7 @@
                     <h6 class="submenu-hdr">Main</h6>
                     <ul>
                         <li class="@if (Route::current()->getName() == 'dashboard') active @endif">
-                            <a href="{{route('dashboard')}}">
+                            <a href="{{ route('dashboard') }}">
                                 <i class="ti ti-layout-grid fs-16 me-2"></i>
                                 <span>Dashboard</span>
                             </a>
@@ -88,15 +88,21 @@
                     <h6 class="submenu-hdr">User Management</h6>
                     <ul>
                         <li class="@if (Route::current()->getName() == 'users.index') active @endif">
-                            <a href="{{route('users.index')}}">
+                            <a href="{{ route('users.index') }}">
                                 <i class="ti ti-shield-up fs-16 me-2"></i>
                                 <span>Users</span>
                             </a>
                         </li>
                         <li class="@if (Route::current()->getName() == 'roles.index') active @endif">
-                            <a href="{{route('roles.index')}}">
+                            <a href="{{ route('roles.index') }}">
                                 <i class="ti ti-jump-rope fs-16 me-2"></i>
                                 <span>Roles & Permissions</span>
+                            </a>
+                        </li>
+                        <li class="@if (Route::current()->getName() == 'login-history.index') active @endif">
+                            <a href="{{ route('login-history.index') }}">
+                                <i class="ti ti-history fs-16 me-2"></i>
+                                <span>Login History</span>
                             </a>
                         </li>
                     </ul>
