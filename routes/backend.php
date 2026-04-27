@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\backend\LanguageController;
 use App\Http\Controllers\backend\LoginHistoryController;
 use App\Http\Controllers\backend\UserController;
 use App\Http\Controllers\RoleController;
@@ -14,3 +15,7 @@ Route::get('roles/{role}/permissions', [RoleController::class, 'permissions'])->
 Route::post('roles/{role}/permissions', [RoleController::class, 'updatePermissions'])->name('roles.update-permissions');
 Route::get('login-histories', [LoginHistoryController::class, 'index'])->name('login-history.index');
 Route::get('login-histories/{loginHistory}/details', [LoginHistoryController::class, 'details'])->name('login-history.details');
+Route::controller(LanguageController::class)->group(function () {
+    Route::get('manage-language/{lang?}', 'index')->name('language.index');
+    Route::post('manage-language/{lang}', 'update')->name('language.update');
+});
