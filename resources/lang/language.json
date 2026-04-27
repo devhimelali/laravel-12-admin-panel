@@ -10,5 +10,17 @@
         "name": "Bengali",
         "countryCode": "BD",
         "enabled": true
+    },
+    {
+        "code": "fr",
+        "name": "Français",
+        "countryCode": "FR",
+        "enabled": true
+    },
+    {
+        "code": "de",
+        "name": "German",
+        "countryCode": "DE",
+        "enabled": true
     }
 ]

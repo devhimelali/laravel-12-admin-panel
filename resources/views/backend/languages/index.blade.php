@@ -11,6 +11,12 @@
                 <h6>Manage your application languages</h6>
             </div>
         </div>
+        <div class="page-btn">
+            <a href="javascript:void(0);" class="btn btn-primary" id="add-language-btn">
+                <i class="ti ti-circle-plus me-1"></i>
+                Add Language
+            </a>
+        </div>
     </div>
     <div class="row">
         <div class="col-md-2">
@@ -49,12 +55,6 @@
         <div class="col-md-10">
             <div class="card">
                 <div class="card-body">
-                    @if (session('success'))
-                        <div class="alert alert-success alert-dismissible fade show" role="alert">
-                            {{ session('success') }}
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                        </div>
-                    @endif
                     <form action="{{ route('language.update', $selectedLang) }}" method="POST">
                         @csrf
                         <div class="row">
@@ -66,8 +66,7 @@
                                 <div class="col-md-4 mb-3">
                                     <label for="label-{{ Str::slug($key) }}" class="form-label">{{ $key }}</label>
                                     <input type="text" class="form-control" id="label-{{ Str::slug($key) }}"
-                                        name="{{ $key }}"
-                                        value="{{ e(old($key, $value ?? '')) }}">
+                                        name="{{ $key }}" value="{{ e(old($key, $value ?? '')) }}">
                                 </div>
                             @empty
                                 <div class="col-12">
@@ -95,7 +94,95 @@
         </div>
     </div>
 @endsection
+@push('modals')
+    <div class="modal fade" id="add-language-modal" tabindex="-1" aria-labelledby="add-language-modal-title"
+        aria-hidden="true" data-bs-backdrop="static">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="add-language-modal-title">Add Language</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form action="{{ route('language.store') }}" method="POST" id="add-language-form">
+                    @csrf
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-12 mb-3">
+                                <label for="language-name" class="form-label">Language Name</label>
+                                <input type="text" class="form-control @error('name') is-invalid @enderror"
+                                    id="language-name" name="name" value="{{ old('name') }}"
+                                    placeholder="e.g., French, German, Spanish" required maxlength="255">
+                                @error('name')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="col-md-12 mb-3">
+                                <label for="language-code" class="form-label">Language Code</label>
+                                <input type="text" class="form-control @error('code') is-invalid @enderror"
+                                    id="language-code" name="code" value="{{ old('code') }}"
+                                    placeholder="e.g., fr, de, es-bd" required maxlength="30"
+                                    pattern="[a-zA-Z0-9\-]+" title="Letters, numbers, and hyphen only">
+                                @error('code')
+                                    <div class="invalid-feedback d-block">{{ $message }}</div>
+                                @enderror
+                                <div class="form-text">Lowercase recommended (saved lowercase). Used for the JSON file name.</div>
+                            </div>
+                            <div class="col-md-12 mb-3">
+                                <label for="language-country-code" class="form-label">Country Code</label>
+                                <input type="text"
+                                    class="form-control text-uppercase @error('country_code') is-invalid @enderror"
+                                    id="language-country-code" name="country_code"
+                                    value="{{ old('country_code') }}" placeholder="e.g., FR, DE, BD"
+                                    required maxlength="2" minlength="2"
+                                    pattern="[a-zA-Z]{2}" title="ISO 3166-1 alpha-2 (two letters)">
+                                @error('country_code')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                                <div class="form-text">Two-letter ISO code for the flag image (<code>vendor/flags/xx.svg</code>).</div>
+                            </div>
+                            <div class="col-md-12 mb-3">
+                                <div class="d-flex align-items-center justify-content-between">
+                                    <label class="form-label mb-0" for="language-enabled">Enabled</label>
+                                    <div class="form-check form-switch">
+                                        <input type="hidden" name="enabled" value="0">
+                                        <input class="form-check-input" type="checkbox" name="enabled"
+                                            id="language-enabled" value="1"
+                                            @checked(old('enabled', '1') === '1')>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary me-2" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary" id="submit-add-language-btn">
+                            <i class="ti ti-circle-plus me-1"></i>
+                            Add Language
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+@endpush
 @push('scripts')
+    <script>
+        $(document).ready(function() {
+            @if (session('success'))
+                notify('success', @json(session('success')));
+            @endif
+            @if (session('error'))
+                notify('error', @json(session('error')));
+            @endif
+
+            $('#add-language-btn').on('click', function() {
+                $('#add-language-modal').modal('show');
+            });
+            @if ($errors->hasAny(['name', 'code', 'country_code']))
+                $('#add-language-modal').modal('show');
+            @endif
+        });
+    </script>
 @endpush
 @push('styles')
     <style>

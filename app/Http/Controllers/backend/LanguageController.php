@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\backend;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreLanguageRequest;
 use DebugPHP\Debug;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 
@@ -49,6 +51,64 @@ class LanguageController extends Controller
         Debug::send($availableLanguages, 'Available Languages');
 
         return view('backend.languages.index', compact('availableLanguages', 'selectedLang', 'defaultData'));
+    }
+
+    public function store(StoreLanguageRequest $request): RedirectResponse
+    {
+        $validated = $request->validated();
+
+        $langListPath = resource_path('lang/language.json');
+        $languages = [];
+        if (File::exists($langListPath)) {
+            $decoded = json_decode(File::get($langListPath), true);
+            $languages = is_array($decoded) ? $decoded : [];
+        }
+
+        $code = strtolower($validated['code']);
+        $existingCodes = collect($languages)->pluck('code')->map(fn (string $c): string => strtolower($c))->all();
+
+        if (in_array($code, $existingCodes, true)) {
+            return redirect()
+                ->route('language.index')
+                ->withInput()
+                ->withErrors(['code' => 'A language with this code already exists.']);
+        }
+
+        $countryCode = strtoupper($validated['country_code']);
+        $enabled = $request->boolean('enabled');
+
+        $languages[] = [
+            'code' => $code,
+            'name' => $validated['name'],
+            'countryCode' => $countryCode,
+            'enabled' => $enabled,
+        ];
+
+        File::put(
+            $langListPath,
+            json_encode(array_values($languages), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT).PHP_EOL
+        );
+
+        $newLangPath = resource_path("lang/{$code}.json");
+        if (! File::exists($newLangPath)) {
+            $templatePath = resource_path('lang/en.json');
+            if (File::exists($templatePath)) {
+                $template = json_decode(File::get($templatePath), true);
+                if (is_array($template)) {
+                    $emptyValues = array_fill_keys(array_keys($template), '');
+                    File::put(
+                        $newLangPath,
+                        json_encode($emptyValues, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT).PHP_EOL
+                    );
+                }
+            } else {
+                File::put($newLangPath, "{}\n");
+            }
+        }
+
+        return redirect()
+            ->route('language.index', $code)
+            ->with('success', 'Language added successfully.');
     }
 
     public function update(Request $request, string $lang)

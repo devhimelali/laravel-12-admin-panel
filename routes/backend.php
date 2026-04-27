@@ -17,5 +17,6 @@ Route::get('login-histories', [LoginHistoryController::class, 'index'])->name('l
 Route::get('login-histories/{loginHistory}/details', [LoginHistoryController::class, 'details'])->name('login-history.details');
 Route::controller(LanguageController::class)->group(function () {
     Route::get('manage-language/{lang?}', 'index')->name('language.index');
+    Route::post('manage-language', 'store')->name('language.store');
     Route::post('manage-language/{lang}', 'update')->name('language.update');
 });
