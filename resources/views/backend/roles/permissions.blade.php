@@ -54,20 +54,24 @@
             @php
                 $groupId = $groupName ? Str::slug($groupName) : 'general';
                 $groupLabel = $groupName ? ucwords(str_replace(['-', '_'], ' ', $groupName)) : 'General';
-                $groupIcons = [
-                    'dashboard' => 'ti-layout-dashboard',
-                    'users' => 'ti-users',
-                    'roles' => 'ti-shield-check',
-                    'settings' => 'ti-settings',
+                $groupKey = $groupName !== null && $groupName !== '' ? Str::lower((string) $groupName) : 'general';
+                $groupIconSuffixes = [
+                    'dashboard' => 'layout-dashboard',
+                    'users' => 'users',
+                    'roles' => 'shield-check',
+                    'settings' => 'settings',
+                    'general' => 'folder',
                 ];
-                $groupIcon = $groupIcons[$groupName] ?? 'ti-key';
+                $groupIcon = $groupIconSuffixes[$groupKey] ?? 'key';
             @endphp
             <div class="card permission-group mb-3 shadow-sm" id="group-card-{{ $groupId }}">
-                <div class="card-header bg-transparent border-bottom py-3 d-flex align-items-center justify-content-between">
+                <div
+                    class="card-header bg-transparent border-bottom py-3 d-flex align-items-center justify-content-between">
                     <div class="d-flex align-items-center flex-grow-1 cursor-pointer collapse-trigger"
                         data-bs-toggle="collapse" data-bs-target="#collapse-{{ $groupId }}" aria-expanded="true">
-                        <div class="rounded-circle bg-primary-subtle p-2 me-3">
-                            <i class="ti {{ $groupIcon }} text-primary fs-5"></i>
+                        <div
+                            class="permission-group-icon-wrap rounded-circle bg-primary-subtle me-3 d-inline-flex align-items-center justify-content-center flex-shrink-0">
+                            <span class="ti ti-{{ $groupIcon }} permission-group-header-icon" aria-hidden="true"></span>
                         </div>
                         <div>
                             <h6 class="mb-0 fw-semibold">{{ $groupLabel }}</h6>
@@ -82,7 +86,8 @@
                         <div class="form-check mb-0">
                             <input class="form-check-input group-select-all" type="checkbox" id="group-{{ $groupId }}"
                                 data-group="{{ $groupId }}">
-                            <label class="form-check-label small fw-medium" for="group-{{ $groupId }}">Select all</label>
+                            <label class="form-check-label small fw-medium" for="group-{{ $groupId }}">Select
+                                all</label>
                         </div>
                     </div>
                 </div>
@@ -158,6 +163,25 @@
 
         .collapse-icon {
             transition: transform 0.2s ease;
+        }
+
+        .permission-group-icon-wrap {
+            width: 2.5rem;
+            height: 2.5rem;
+            padding: 0.35rem;
+            box-sizing: border-box;
+        }
+
+        .permission-group-header-icon {
+            display: block;
+            font-size: 1.25rem;
+            line-height: 1;
+            color: var(--bs-primary) !important;
+            font-family: "tabler-icons" !important;
+            font-style: normal !important;
+            font-weight: normal !important;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
     </style>
 @endpush
