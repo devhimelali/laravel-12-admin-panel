@@ -5,7 +5,6 @@ namespace App\Providers;
 use App\Utility\LoginHistoryUtility;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Fortify\Contracts\LoginResponse;
-use DebugPHP\Debug;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -35,10 +34,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        if (config('debugphp.session_token') && config('debugphp.host')) {
-            Debug::init(config('debugphp.session_token'), [
-                'host' => config('debugphp.host'),
-            ]);
-        }
+        //
     }
 }

@@ -4,7 +4,6 @@ namespace App\Http\Controllers\backend;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreLanguageRequest;
-use DebugPHP\Debug;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
@@ -26,7 +25,6 @@ class LanguageController extends Controller
         if ($lang && collect($languages)->pluck('code')->contains($lang)) {
             $selectedLang = $lang;
         }
-        Debug::send($languages, 'Languages');
 
         $defaultData = [];
         $langFilePath = resource_path("lang/{$selectedLang}.json");
@@ -34,8 +32,6 @@ class LanguageController extends Controller
             $decoded = json_decode(File::get($langFilePath), true);
             $defaultData = is_array($decoded) ? $decoded : [];
         }
-
-        Debug::send($defaultData, 'Default Data');
 
         $availableLanguages = collect($languages)
             ->map(function ($lang) {
@@ -47,8 +43,6 @@ class LanguageController extends Controller
                     'enabled' => $lang['enabled'] ?? true,
                 ];
             })->values()->toArray();
-
-        Debug::send($availableLanguages, 'Available Languages');
 
         return view('backend.languages.index', compact('availableLanguages', 'selectedLang', 'defaultData'));
     }

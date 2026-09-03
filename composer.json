@@ -19,7 +19,6 @@
         "yajra/laravel-datatables-oracle": "^13.0"
     },
     "require-dev": {
-        "callmeleon167/debugphp": "^1.4",
         "fakerphp/faker": "^1.23",
         "laravel/boost": "*",
         "laravel/pail": "^1.2.2",
